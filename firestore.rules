@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Server-side domain enforcement: even if the client is tampered with,
+    // Firestore rejects anyone outside the allowed domain.
+    function inAllowedDomain() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email.lower().matches('.*@hbplus[.]fit$');
+    }
+
+    function isAdmin() {
+      return inAllowedDomain()
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    match /users/{uid} {
+      allow read: if inAllowedDomain() && (request.auth.uid == uid || isAdmin());
+
+      // New users can only create their own doc, and only as "user".
+      allow create: if inAllowedDomain()
+        && request.auth.uid == uid
+        && request.resource.data.role == 'user'
+        && request.resource.data.email == request.auth.token.email;
+
+      // Users may refresh profile fields but never change role or email.
+      allow update: if inAllowedDomain()
+        && request.auth.uid == uid
+        && request.resource.data.role == resource.data.role
+        && request.resource.data.email == resource.data.email;
+
+      allow delete: if false;
+    }
+  }
+}

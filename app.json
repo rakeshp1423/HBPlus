@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "name": "HB Plus Portal",
+    "slug": "hbplus-portal",
+    "scheme": "hbplus",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "fit.hbplus.portal"
+    },
+    "android": {
+      "package": "fit.hbplus.portal"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ec7f0de6-c9a2-472b-b3a2-592bc4d66a68"
+      }
+    }
+  }
+}
