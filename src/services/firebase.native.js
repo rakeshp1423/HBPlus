@@ -3,13 +3,11 @@ import { getAuth, initializeAuth, getReactNativePersistence } from 'firebase/aut
 import { getFirestore } from 'firebase/firestore';
 import { app } from './firebaseApp';
 
-// Persist the Firebase session across app restarts. Firebase manages the
-// ID/refresh tokens itself; we never copy tokens into our own storage.
-let authInstance;
+
 try {
   authInstance = initializeAuth(app, { persistence: getReactNativePersistence(AsyncStorage) });
 } catch {
-  authInstance = getAuth(app); // already initialised (fast refresh)
+  authInstance = getAuth(app);
 }
 
 export const auth = authInstance;

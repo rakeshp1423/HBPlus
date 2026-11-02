@@ -6,11 +6,7 @@ import { db } from './firebase';
 
 export const ROLES = { ADMIN: 'admin', USER: 'user' };
 
-/**
- * Create the user's profile on first login, refresh it afterwards.
- * Role is always "user" on creation; promote to "admin" manually in the Firebase console
- * (Firestore rules forbid clients from changing their own role).
- */
+
 export async function syncUserProfile(fbUser) {
   const ref = doc(db, 'users', fbUser.uid);
   const snap = await getDoc(ref);
@@ -36,7 +32,6 @@ export async function syncUserProfile(fbUser) {
   return { id: fbUser.uid, ...snap.data() };
 }
 
-/** Admin only (enforced by Firestore rules). */
 export async function fetchAllUsers(max = 50) {
   const snap = await getDocs(query(collection(db, 'users'), orderBy('createdAt', 'desc'), limit(max)));
   return snap.docs.map((d) => ({ id: d.id, ...d.data() }));

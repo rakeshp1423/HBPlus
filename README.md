@@ -33,8 +33,8 @@ src/
 ### 1. Install
 ```bash
 npm install
-npx expo install --fix     # aligns package versions with your Expo SDK
-cp .env.example .env       # then fill in values (step 2-3)
+npx expo install --fix
+cp .env.example .env
 ```
 
 ### 2. Firebase

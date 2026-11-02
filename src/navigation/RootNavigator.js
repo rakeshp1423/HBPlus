@@ -8,8 +8,7 @@ import DashboardScreen from '../screens/DashboardScreen';
 
 const Stack = createNativeStackNavigator();
 
-// Web URLs: /login and /dashboard. Screens are registered conditionally below, so opening
-// /dashboard while logged out cannot match a route and falls back to Login.
+
 const linking = {
   prefixes: ['hbplus://'],
   config: { screens: { Login: 'login', Dashboard: 'dashboard' } },

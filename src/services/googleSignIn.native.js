@@ -8,7 +8,7 @@ import { toFriendlyError } from '../utils/errors';
 
 WebBrowser.maybeCompleteAuthSession();
 
-/** Native (Android / iOS): Google OAuth 2.0 via expo-auth-session -> Firebase credential. */
+
 export function useGoogleSignIn({ onError }) {
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
     ...googleClientIds,
@@ -27,7 +27,7 @@ export function useGoogleSignIn({ onError }) {
     } else if (response.type === 'error') {
       onError('Google sign-in failed. Please try again.');
     } else if (response.type === 'cancel' || response.type === 'dismiss') {
-      onError(null); // user backed out - just stop the spinner
+      onError(null);
     }
   }, [response]);
 
